@@ -55,6 +55,10 @@
           <%= submit_tag("Create Group", :class => 'btn btn-xs btn-success')%>
           <% end %>
           
+          
+          <!--:action => "random",-->
+          <%= form_tag({:action => "random", :method => "post"}) %>
+          <%= submit_tag("Group randomly", :class => 'btn btn-xs btn-success')%>
         </div>
       </div>
       

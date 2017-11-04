@@ -31,7 +31,6 @@ class GroupController < ApplicationController
         teams.each do |t|
             @teams_li.delete(t)
         end
-    
         render 'create'
     end
     
@@ -92,7 +91,7 @@ class GroupController < ApplicationController
             #This list holds two unpaired teams
             two_teams = []
             teams.each do |team|
-                if Group.has_team?(team.id, discussion.id) == false
+                if !Group.has_team?(team.id, discussion.id)
                     two_teams.push(team.id)
                 end
                 if two_teams.length == 2
@@ -101,7 +100,7 @@ class GroupController < ApplicationController
                 end
             end
         end
-        redirect_to admins_path
+        redirect_to group_index_path
     end
 end
 
