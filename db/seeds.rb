@@ -6,14 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 admins = [
-      { :name => "EnrollMe", :email => "enrollmeberkeley@gmail.com", :superadmin => true},
-      { :name => "Michael-David Sasson", :email => "sasson@berkeley.edu", :superadmin => false},
-      { :name => "Yonas Kbrom", :email => "kbromyonas@berkeley.edu", :superadmin => true},
-      { :name => "Monty Inaya", :email => "mr.monty@berkeley.edu", :superadmin => true},
-      { :name => "Vikram Baid", :email => "vbaid@berkeley.edu", :superadmin => true},
-      { :name => "Mark Sun", :email => "msun908@berkeley.edu", :superadmin => true},
-      { :name => "Timothy Stepro", :email => "stepro.015389@berkeley.edu", :superadmin => true},
-      { :name => "Minjoo Sur", :email => "minjoo@berkeley.edu", :superadmin => true},
+      { :name => "EnrollMe", :email => "enrollmeberkeley@gmail.com", :superadmin => true, :TAadmin => false},
+      { :name => "Michael-David Sasson", :email => "sasson@berkeley.edu", :superadmin => false, :TAadmin => false},
+      { :name => "Yonas Kbrom", :email => "kbromyonas@berkeley.edu", :superadmin => true, :TAadmin => false},
+      { :name => "Monty Inaya", :email => "mr.monty@berkeley.edu", :superadmin => true, :TAadmin => false},
+      { :name => "Vikram Baid", :email => "vbaid@berkeley.edu", :superadmin => true, :TAadmin => false},
+      { :name => "Mark Sun", :email => "msun908@berkeley.edu", :superadmin => true, :TAadmin => false},
+      { :name => "Timothy Stepro", :email => "stepro.015389@berkeley.edu", :superadmin => true, :TAadmin => false},
+      { :name => "Minjoo Sur", :email => "minjoo@berkeley.edu", :superadmin => true, :TAadmin => false},
+      { :name => "TA Minjoo", :email => "loveshero92@gmail.com", :superadmin => false, :TAadmin => true},
   ]
   
 users = [ 
@@ -23,7 +24,7 @@ users = [
       
       { :name => "Mark Sun", :email => "msun908@gmail.com", :major => "CS", :sid => 444444, :team_id => 2},
       { :name => "Timothy Stepro", :email => "stepro.015389@gmail.com", :major => "CS", :sid => 555555, :team_id => 2},
-      { :name => "Minjoo Sur", :email => "minjoo@gmail.com", :major => "CS", :sid => 6666666, :team_id => 2},
+      { :name => "Minjoo Sur", :email => "minjoosur@gmail.com", :major => "CS", :sid => 6666666, :team_id => 2},
       
       { :name => "Lonzo Ball", :email => "ball@gmail.com", :major => "CS", :sid => 777777, :team_id => 3},
       { :name => "Kobe Bryant", :email => "bryant@gmail.com", :major => "CS", :sid => 888888, :team_id => 3},

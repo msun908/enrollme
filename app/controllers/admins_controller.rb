@@ -1,6 +1,6 @@
 class AdminsController < ApplicationController
   skip_before_filter :authenticate, :only => ['new', 'create']
-  before_filter :validate_admin, :set_admin, :except => ['new', 'create']
+  before_filter :validate_admin, :set_admin
   
   def show_import
     render 'import'
@@ -12,9 +12,17 @@ class AdminsController < ApplicationController
   end
   
   def create
-    @admin = Admin.new(admin_params)
+    if params["TAadmin"] == "true"
+      @admin = Admin.new(:name => params[:admin]["name"], :email => params[:admin]["email"], :TAadmin => true )
+    elsif params["TAadmin"] == "false"
+      @admin = Admin.new(:name => params[:admin]["name"], :email => params[:admin]["email"], :TAadmin => false )
+    else
+      redirect_to new_admin_path, :notice => "Choose an admin type"
+      return
+    end
+    
     @admin.superadmin = false
-    if session[:is_admin] == true and @admin.save
+    if session[:is_admin] == true and @admin.save 
       redirect_to admins_path, :notice => "You created admin " + admin_params["name"] + " successfully!"
     else
       render 'new', :notice => "Form is invalid"
@@ -30,7 +38,11 @@ class AdminsController < ApplicationController
     status = params[:status]
     @status = status
     @teams_li = Team.filter_by(status)
-    render 'index'
+    if @admin.TAadmin
+      render 'index_ta'
+    else
+      render 'index'
+    end
   end
   
   def unapproved
@@ -135,7 +147,9 @@ class AdminsController < ApplicationController
     if @admin.superadmin == true and params[:transfer_admin] != nil
       other_admin = Admin.find(params[:transfer_admin])
       @admin.superadmin = false
+      other_admin.TAadmin = false
       other_admin.superadmin = true
+      other_admin.TAadmin = false
       @admin.save!
       other_admin.save!
       notice = "Successfully transferred superadmin powers."
@@ -186,7 +200,7 @@ class AdminsController < ApplicationController
   end
   
   def admin_params
-    params.require(:admin).permit(:name, :email)
+    params.require(:admin).permit(:name, :email, :TAadmin)
   end  
   
   def admin_tutorial
