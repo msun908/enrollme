@@ -62,6 +62,7 @@ class Team < ActiveRecord::Base
     
     def add_submission(id)
         self.update(submitted: true)
+        self.submission = Submission.find_by_id id
         self.submission_id = id
         self.save!
     end
@@ -88,10 +89,10 @@ class Team < ActiveRecord::Base
       approved_teams.each do |t|
         count, index = 100, false
         team_subm, team_prefs = t.submission, []
+        if t.approved || !t.eligible? || team_subm.nil? then next end
         team_prefs << team_subm.disc1id
         team_prefs << team_subm.disc2id
         team_prefs << team_subm.disc3id
-        if t.approved || !t.eligible? then next end
         team_prefs.each do |d_id|
           d = Discussion.find_by_id d_id
           if d.count_students < count
