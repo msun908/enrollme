@@ -86,14 +86,14 @@ class Team < ActiveRecord::Base
     
     def self.add_teams_to_discussions(approved_teams)
       approved_teams.each do |t|
-        valid_discs, count, index = Discussion.valid_discs_for(t), 100, false
-        team_subm = t.submission
-        # TODO: factor in each approved team's preferred discussions when automatically enrolling
-        # disc_pref_1 = team_subm.disc1id
-        # disc_pref_2 = team_subm.disc2id
-        # disc_pref_3 = team_subm.disc3id
-        if t.approved || !t.eligible? || valid_discs.count.zero? then next end
-        valid_discs.each do |d|
+        count, index = 100, false
+        team_subm, team_prefs = t.submission, []
+        team_prefs << team_subm.disc1id
+        team_prefs << team_subm.disc2id
+        team_prefs << team_subm.disc3id
+        if t.approved || !t.eligible? then next end
+        team_prefs.each do |d_id|
+          d = Discussion.find_by_id d_id
           if d.count_students < count
             count, index = d.count_students, d.id
           end
